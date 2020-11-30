@@ -217,7 +217,7 @@ void draw()
       
       
       
-      yes = new cheese(monke, imgWidth, imgHeight, 1, 12);
+      yes = new cheese(monke, imgWidth, imgHeight, 10, 12);
       
       phase = 2;
       startTime = second()+60*(minute()+60*(hour()+24*day()));
