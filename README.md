@@ -9,6 +9,7 @@ Enjoy this absolute beauty that I spent too much time on. It's perfection. Pleas
 There are 8 unique songs that play during this game, 6 of which alternate during the cow section. I'd recommend listening to them in game, but here are the Youtube links if you want to hear more.
 
 Menu music: https://www.youtube.com/watch?v=qucZbA1oAL4
+
 "Cow section" music:
 1. https://youtu.be/lXxUPo9tRao?list=PLu8Q-uh6q0sopowEBiSGtUrRjWoGD-kGE
 2. https://youtu.be/EU50FE-SdWg?list=PLu8Q-uh6q0srDhyJ5wJ_Fapks-azGTimJ
