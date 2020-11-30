@@ -12,6 +12,11 @@ Capture video;
 SoundFile song;
 SoundFile wiiSong;
 SoundFile beat;
+SoundFile song2;
+SoundFile song3;
+SoundFile song4;
+SoundFile song5;
+SoundFile song6;
 
 boolean bPressed;
 boolean pPressed;
@@ -57,6 +62,9 @@ int points;
 boolean playerEnemyCollision;
 boolean bulletEnemyCollision;
 
+int timesPlayed;
+
+PFont mono;
 
 
 
@@ -71,15 +79,31 @@ void setup()
   h = displayHeight;
   fullScreen();
   
+  timesPlayed = 1;
+  
+  mono = createFont("fonts/andalemo.ttf", 32);
+  
   phase = -1;
   
   String path = sketchPath("music/COW.mp3");
   String path2 = sketchPath("music/wii.mp3");
   String path3 = sketchPath("music/beat.mp3");
+  String path4 = sketchPath("music/someBODY.mp3");
+  String path5 = sketchPath("music/n-word.mp3");
+  String path6 = sketchPath("music/beads.mp3");
+  String path7 = sketchPath("music/frick.mp3");
+  String path8 = sketchPath("music/babyBoy.mp3");
   
   song = new SoundFile(this, path); 
+  song2 = new SoundFile(this, path4);
+  song3 = new SoundFile(this, path5);
+  song4 = new SoundFile(this, path6);
+  song5 = new SoundFile(this, path7);
+  song6 = new SoundFile(this, path8);
+  
   wiiSong = new SoundFile(this, path2);
   beat = new SoundFile(this, path3);
+  
   
   video = new Capture(this, Capture.list()[0]);
   
@@ -141,6 +165,7 @@ boolean noMore2 = false;
 int poop = 1;
 
 boolean broMoment= true;
+boolean hamburger = (songTime >= 244);
 
 void draw()
 {
@@ -192,12 +217,12 @@ void draw()
       
       
       
-      yes = new cheese(monke, imgWidth, imgHeight, 10, 12);
+      yes = new cheese(monke, imgWidth, imgHeight, 1, 12);
       
       phase = 2;
       startTime = second()+60*(minute()+60*(hour()+24*day()));
       songStart = second()+60*(minute()+60*(hour()+24*day()));
-      song.play();
+      songeth(timesPlayed, true);
     }
     
   }
@@ -221,21 +246,24 @@ void draw()
       
       phase = 2;
       startTime = second()+60*(minute()+60*(hour()+24*day()));
-      song.play();
+      songStart = second()+60*(minute()+60*(hour()+24*day()));
+      songeth(timesPlayed, true);
     }
   }
   else if (phase == 2) {
     elapsedTime = (second()+60*(minute()+60*(hour()+24*day()))) - startTime;
     songTime = (second()+60*(minute()+60*(hour()+24*day()))) - songStart;
     
-    if(songTime >= 244) {
-      song.loop();
+    
+    hamburger = lehamburger();
+    if(hamburger) {
+      songeth(timesPlayed);
       songStart = second()+60*(minute()+60*(hour()+24*day()));
     }
     
     if(yes.invinc()) elapsedTimeSinceInvinc = (second()+60*(minute()+60*(hour()+24*day()))) - invincTimer;
     
-    if(elapsedTimeSinceInvinc >= 3) yes.setInvinc(false);
+    if(elapsedTimeSinceInvinc >= 1) yes.setInvinc(false);
 
     
     if(points % 50 == 0 && points != 0) bossTime = true;
@@ -362,7 +390,7 @@ void draw()
       }
       if(yes.isDead()) {
         phase = 3;
-        wiiSong.play();
+        broMoment = true;
       }
     }
     
@@ -373,7 +401,7 @@ void draw()
     displayPlayerHealth();
   }
   else if (phase == 3) {
-    song.stop();
+    songeth(timesPlayed, false);
     points = 0;
     
     eSpeed = 3;
@@ -388,10 +416,14 @@ void draw()
     bossTime = false;
     bossActivated = false;
     
+    firstTimeStartingVideo = true;
     
     if(broMoment) {
+      wiiSong.play();
+      
       bullets.clear();
       enemies.clear();
+      deleteImage("poop.jpg");
       
       broMoment = false;
     }
@@ -399,11 +431,99 @@ void draw()
     imageMode(CENTER);
     image(gameEnd, w/2, h/2, w, h);
     
+    
     if(rPressed) {
       rPressed = false;
       wiiSong.stop();
-      phase = 0;
+      beat.play();
+      phase = -1;
+      
+      timesPlayed++;
     }
+  }
+}
+
+public boolean lehamburger() {
+  boolean h;
+  
+  if(timesPlayed == 1) {
+    h = (songTime >= 244);
+  }
+  else if(timesPlayed % 6 == 0) {
+    h = (songTime >= 80);
+  }
+  else if(timesPlayed % 5 == 0) {
+    h = (songTime >= 107);
+  }
+  else if(timesPlayed % 4 == 0) {
+    h = (songTime >= 149);
+  }
+  else if(timesPlayed % 3 == 0) {
+    h = (songTime >= 64);
+  }
+  else if(timesPlayed % 2 == 0) {
+    h = (songTime >= 277);
+  }
+  else {
+    h = (songTime >= 244);
+  }
+  
+  return h;
+}
+
+
+public void songeth(int timesPlayed, boolean start) {
+  if(timesPlayed == 1) {
+    if(start) song.play();
+    else song.stop();
+  }
+  else if(timesPlayed % 6 == 0) {
+    if(start) song6.play();
+    else song6.stop();
+  }
+  else if(timesPlayed % 5 == 0) {
+    if(start) song5.play();
+    else song5.stop();
+  }
+  else if(timesPlayed % 4 == 0) {
+    if(start) song4.play();
+    else song4.stop();
+  }
+  else if(timesPlayed % 3 == 0) {
+    if(start) song3.play();
+    else song3.stop();
+  }
+  else if(timesPlayed % 2 == 0) {
+    if(start) song2.play();
+    else song2.stop();
+  }
+  else {
+    if(start) song.play();
+    else song.stop();
+  }
+}
+
+public void songeth(int timesPlayed) {
+  if(timesPlayed == 1) {
+    song.loop();
+  }
+  else if(timesPlayed % 6 == 0) {
+    song6.loop();
+  }
+  else if(timesPlayed % 5 == 0) {
+    song5.loop();
+  }
+  else if(timesPlayed % 4 == 0) {
+    song4.loop();
+  }
+  else if(timesPlayed % 3 == 0) {
+    song3.loop();
+  }
+  else if(timesPlayed % 2 == 0) {
+    song2.loop();
+  }
+  else {
+    song.loop();
   }
 }
 
@@ -442,17 +562,9 @@ public void cowSpawner(int health, float speed, float speedIncrease) {
     
     enemies.add(new juan(x, y, eWidth, eHeight, health, speed, speedIncrease));
   }
-  else
-  {
-    System.out.println("Points: " + points);
-    println("ElapsedTime: " + elapsedTime);
-    println();
-  }
 }
 
 public void displayText(String s, int x, int y) {
-  PFont mono = createFont("fonts/andalemo.ttf", 32);
-  
   textFont(mono);
   fill(0, 102, 153);
   text(s, x, y);
@@ -523,7 +635,6 @@ void deleteImage(String name) {
 }
 
 void displayPlayerHealth() {
-  PFont mono = createFont("fonts/andalemo.ttf", 32);
   
   textFont(mono);
   fill(0, 102, 153);
